@@ -17,3 +17,7 @@ output "sqs_deadletter" {
 output "sns_deadletter" {
   value = module.development[*].sqs_deadletter
 }
+
+output "sns_topic_arn" {
+  value = module.development[*].sns_topic_arn
+}
