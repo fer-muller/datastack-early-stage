@@ -37,3 +37,15 @@ variable "events" {
   type        = set(any)
   description = "Events to track"
 }
+
+variable "etl_batch_size" {
+  type        = number
+  description = "Number of events you want your SQS to hold before calling a lambda"
+  default     = 50
+}
+
+variable "etl_maximum_batching_window_in_seconds" {
+  type        = number
+  description = "Number in seconds you want your SQS to hold before calling a lambda"
+  default     = 300
+}

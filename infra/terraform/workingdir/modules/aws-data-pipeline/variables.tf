@@ -85,3 +85,73 @@ variable "sqs_managed_sse_enabled" {
   description = "Boolean to enable server-side encryption (SSE) of message content with SQS-owned encryption keys"
   default     = true
 }
+
+variable "lambda_suffix" {
+  type        = string
+  description = "Suffix for lambda scripts"
+  default     = "worker"
+}
+
+variable "lambda_sqs_deadqueue_filename" {
+  type        = string
+  description = "Filename of your SQS Dead Queue script without extension"
+  default     = "SQSDeadQueue"
+}
+
+variable "lambda_sns_deadqueue_filename" {
+  type        = string
+  description = "Filename of your SNS Dead Queue script without extension"
+  default     = "SNSDeadQueue"
+}
+
+variable "lambda_handler_pattern_name" {
+  type        = string
+  description = "Name of your lambda handler"
+  default     = "lambda_handler"
+}
+variable "lambda_origin_app_event_name" {
+  type        = string
+  description = "Name of the app you want to get data from"
+  default     = "my-app"
+}
+
+variable "lambda_raw_data_s3_stage_name" {
+  type        = string
+  description = "How do you want to call the first ETL zone. Ex: raw, raw-zone, landing-zone, bronze, etc"
+  default     = "raw"
+}
+
+variable "lambda_staging_data_s3_stage_name" {
+  type        = string
+  description = "How do you want to call the second ETL zone. Ex: staging, staging-zone, silver, etc"
+  default     = "staging"
+}
+
+variable "lambda_log_s3_stage_name" {
+  type        = string
+  description = "How do you want to call the error logging zone"
+  default     = "log"
+}
+
+variable "lambda_runtime" {
+  type        = string
+  description = "Runtime of your lambdas"
+  default     = "python3.8"
+}
+
+variable "lambda_default_timeout" {
+  type        = number
+  description = "Max execution time for your lambdas before timeout. Is recommended to set this value based on capacity tests simulating your data flow"
+  default     = 60
+}
+
+variable "lambda_default_concurrency" {
+  type        = number
+  description = "Number of concurrency for your lambdas. Is recommended to set this value based on capacity tests simulating your data flow"
+  default     = 5
+}
+
+variable "lambda_zip_scripts_path" {
+  type        = string
+  description = "Path to your local zip packages, both lambda functions itself and layers"
+}
