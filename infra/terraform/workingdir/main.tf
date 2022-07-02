@@ -53,4 +53,6 @@ module "development" {
   deployment                             = local.deployment
   account_id                             = local.account_id
   events                                 = []
+  etl_batch_size                         = 50
+  etl_maximum_batching_window_in_seconds = 300
 }

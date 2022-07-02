@@ -19,5 +19,17 @@ output "sns_deadletter" {
 }
 
 output "sns_topic_arn" {
-  value = aws_sns_topic.data_serena.arn
+  value = aws_sns_topic.data_sns.arn
+}
+
+output "lambda_etl_arn" {
+  value = module.sqs_lambda_s3.lambda_etl_arn
+}
+
+output "lambda_sqs_deadletter_arn" {
+  value = module.sqs_lambda_s3.sqs_deadletter
+}
+
+output "lambda_sns_deadletter_arn" {
+  value = module.sqs_lambda_s3.sns_deadletter
 }

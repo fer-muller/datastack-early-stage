@@ -21,3 +21,15 @@ output "sns_deadletter" {
 output "sns_topic_arn" {
   value = module.development[*].sns_topic_arn
 }
+
+output "lambda_etl_arn" {
+  value = module.development[*].lambda_etl_arn
+}
+
+output "lambda_sqs_deadletter_arn" {
+  value = module.development[*].sqs_deadletter
+}
+
+output "lambda_sns_deadletter_arn" {
+  value = module.development[*].sns_deadletter
+}

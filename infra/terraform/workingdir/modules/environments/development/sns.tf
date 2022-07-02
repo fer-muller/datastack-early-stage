@@ -44,8 +44,8 @@ EOF
 ####################### SNS SUPPORTING RESOURCES #########################
 
 #SNS Topic Policy
-resource "aws_sns_topic_policy" "data_serena" {
-  arn    = aws_sns_topic.data_serena.arn
+resource "aws_sns_topic_policy" "data_sns" {
+  arn    = aws_sns_topic.data_sns.arn
   policy = data.aws_iam_policy_document.ssm_params_sns.json
 }
 
