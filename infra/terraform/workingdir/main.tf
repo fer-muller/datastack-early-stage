@@ -52,7 +52,8 @@ module "development" {
   tags                                   = local.tags
   deployment                             = local.deployment
   account_id                             = local.account_id
-  events                                 = []
+  # TO DO: Update events according to your project
+  events                                 = ["login", "registration", "newPayment"]
   etl_batch_size                         = 50
   etl_maximum_batching_window_in_seconds = 300
 }

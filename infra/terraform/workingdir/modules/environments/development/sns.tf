@@ -22,11 +22,11 @@ EOF
 resource "aws_sns_topic_subscription" "sns_to_sqs" {
   depends_on = [
     module.aws_data_pipeline,
-    aws_sns_topic.data_serena,
-    aws_sns_topic_policy.data_serena
+    aws_sns_topic.data_sns,
+    aws_sns_topic_policy.data_sns
   ]
   for_each       = module.aws_data_pipeline.sqs_etl_arns
-  topic_arn      = aws_sns_topic.data_serena.arn
+  topic_arn      = aws_sns_topic.data_sns.arn
   protocol       = "sqs"
   endpoint       = each.value
   filter_policy  = <<EOF
