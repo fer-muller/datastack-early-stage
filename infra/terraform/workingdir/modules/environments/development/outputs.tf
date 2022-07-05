@@ -23,13 +23,13 @@ output "sns_topic_arn" {
 }
 
 output "lambda_etl_arn" {
-  value = module.sqs_lambda_s3.lambda_etl_arn
+  value = module.aws_data_pipeline.lambda_etl_arn
 }
 
 output "lambda_sqs_deadletter_arn" {
-  value = module.sqs_lambda_s3.sqs_deadletter
+  value = module.aws_data_pipeline.sqs_deadletter
 }
 
 output "lambda_sns_deadletter_arn" {
-  value = module.sqs_lambda_s3.sns_deadletter
+  value = module.aws_data_pipeline.sns_deadletter
 }
