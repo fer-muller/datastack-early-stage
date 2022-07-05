@@ -162,6 +162,24 @@ data "aws_iam_policy_document" "ssm_params_lambda" {
 
     resources = ["arn:aws:lambda:${var.region}:${var.account_id}:layer:*"]
   }
+
+  statement {
+    actions = [
+      "sns:Publish",
+      "sns:Subscribe",
+      "sns:CreateTopic",
+      "sns:GetTopicAttributes",
+      "sns:SetTopicAttributes",
+      "sns:TagResource",
+      "sns:UntagResource",
+      "sns:ListTagsForResource",
+      "sns:ListSubscriptionsByTopic"
+    ]
+
+    effect = "Allow"
+
+    resources = ["arn:aws:sns:${var.region}:${var.account_id}*"]
+  }
 }
 
 # Lambda Basic Execution Policy
