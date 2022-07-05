@@ -30,7 +30,7 @@ provider "aws" {
 ################################################################################
 resource "random_string" "stack" {
   length  = 8
-  number  = true
+  numeric  = true
   lower   = true
   upper   = false
   special = false
