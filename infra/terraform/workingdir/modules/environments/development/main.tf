@@ -32,6 +32,7 @@ module "aws_data_pipeline" {
   lambda_default_timeout            = 60
   lambda_default_concurrency        = 5
   lambda_zip_scripts_path           = "${path.root}/modules/aws-data-pipeline/lambda_scripts/worker"
+  lambda_event_generator_zip_scripts_path           = "${path.root}/modules/aws-data-pipeline/lambda_scripts/faker"
 
   #SQS VARIABLES
   sqs_delay_seconds             = 0
@@ -41,4 +42,6 @@ module "aws_data_pipeline" {
   sqs_deadletter_suffix         = "sqs-deadletter"
   sqs_sns_deadletter_suffix     = "sns-deadletter"
   sqs_managed_sse_enabled       = true
+
+  sns_arn = aws_sns_topic.data_sns.arn
 }
