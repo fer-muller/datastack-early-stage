@@ -155,3 +155,13 @@ variable "lambda_zip_scripts_path" {
   type        = string
   description = "Path to your local zip packages, both lambda functions itself and layers"
 }
+
+variable "lambda_event_generator_zip_scripts_path" {
+  type        = string
+  description = "Path to your local zip packages, both lambda functions itself and layers"
+}
+
+variable "sns_arn" {
+  type = string
+  description = "SNS that will be used to receive random events from event generator"
+}

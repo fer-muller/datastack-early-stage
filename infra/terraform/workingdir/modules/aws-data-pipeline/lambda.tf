@@ -1,5 +1,6 @@
 locals {
   tmp_folder_path = "/tmp/"
+  event_generator = "eventGenerator"
 
   # This layer is the version 2 for Python 3.8 runtime using sa-east-1
   # This ARN may change over time for new updates. Make sure to check if this is the last version
@@ -89,6 +90,30 @@ resource "aws_lambda_function" "sns_deadletter" {
   tags = var.tags
 }
 
+resource "aws_lambda_function" "event_generator" {
+  depends_on = [
+    aws_s3_bucket_object.event_generator_lambda_files
+  ]
+  s3_bucket                      = "${module.s3_bucket_artifact.s3_bucket_id}"
+  s3_key                         = "${locals.event_generator}.zip"
+  function_name                  = "${locals.event_generator}"
+  role                           = aws_iam_role.iam_for_lambda.arn
+  handler                        = "${locals.event_generator}.${var.lambda_handler_pattern_name}"
+  #source_code_hash               = filebase64sha256("${module.s3_bucket_artifact.s3_bucket_id}/${var.lambda_sns_deadqueue_filename}/artifact.zip")
+  runtime                        = var.lambda_runtime
+  timeout                        = var.lambda_default_timeout
+  reserved_concurrent_executions = var.lambda_default_concurrency
+  layers = aws_lambda_layer_version.faker_layer.arn
+
+  environment {
+    variables = {
+      EVENTS = var.events
+      SNS_ARN = var.sns_arn
+    }
+  }
+  tags = var.tags
+}
+
 
 resource "aws_s3_bucket_object" "lambda_files" {
   for_each      = fileset("${var.lambda_zip_scripts_path}/", "*.zip")
@@ -96,6 +121,21 @@ resource "aws_s3_bucket_object" "lambda_files" {
   key           = "${each.value}"
   source        = "${var.lambda_zip_scripts_path}/${each.value}"
   etag          = filemd5("${var.lambda_zip_scripts_path}/${each.value}")
+}
+
+resource "aws_s3_bucket_object" "event_generator_lambda_files" {
+  for_each      = fileset("${var.lambda_event_generator_zip_scripts_path}/", "*.zip")
+  bucket        = module.s3_bucket_artifact.s3_bucket_id
+  key           = "${each.value}"
+  source        = "${var.lambda_event_generator_zip_scripts_path}/${each.value}"
+  etag          = filemd5("${var.lambda_event_generator_zip_scripts_path}/${each.value}")
+}
+
+resource "aws_lambda_layer_version" "faker_layer" {
+  layer_name = "faker"
+  s3_bucket   = module.s3_bucket_artifact.s3_bucket_id
+  s3_key = "faker.zip"
+  compatible_runtimes = var.lambda_runtime
 }
 
 ####################### LAMBDA SUPPORTING RESOURCES #########################
@@ -161,6 +201,24 @@ data "aws_iam_policy_document" "ssm_params_lambda" {
     ]
 
     resources = ["arn:aws:lambda:${var.region}:${var.account_id}:layer:*"]
+  }
+
+  statement {
+    actions = [
+      "sns:Publish",
+      "sns:Subscribe",
+      "sns:CreateTopic",
+      "sns:GetTopicAttributes",
+      "sns:SetTopicAttributes",
+      "sns:TagResource",
+      "sns:UntagResource",
+      "sns:ListTagsForResource",
+      "sns:ListSubscriptionsByTopic"
+    ]
+
+    effect = "Allow"
+
+    resources = ["arn:aws:sns:${var.region}:${var.account_id}*"]
   }
 }
 
