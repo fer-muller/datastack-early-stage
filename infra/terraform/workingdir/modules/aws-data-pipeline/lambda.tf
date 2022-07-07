@@ -103,7 +103,7 @@ resource "aws_lambda_function" "event_generator" {
   runtime                        = var.lambda_runtime
   timeout                        = var.lambda_default_timeout
   reserved_concurrent_executions = var.lambda_default_concurrency
-  layers = aws_lambda_layer_version.faker_layer.arn
+  layers = [aws_lambda_layer_version.faker_layer.arn]
 
   environment {
     variables = {
