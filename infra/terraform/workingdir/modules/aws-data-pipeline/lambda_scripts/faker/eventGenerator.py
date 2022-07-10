@@ -14,7 +14,8 @@ EVENTS = list(os.environ['EVENTS'])
 logger.info(f"Events: {EVENTS}")
 logger.info(f"SNS: {SNS_ARN}")
 
-chosen_event = EVENTS[randint(0, len(EVENTS)-1)]
+chosen_event = randint(0, len(EVENTS)-1)
+chosen_event = EVENTS[chosen_event]
 logger.info(f"Chosen Event: {chosen_event}")
 event = {}
 fake = Faker()
