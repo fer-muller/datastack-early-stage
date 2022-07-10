@@ -4,11 +4,18 @@ from datetime import datetime
 import json
 import boto3
 import os
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 SNS_ARN = os.environ['SNS_ARN']
 EVENTS = os.environ['EVENTS']
+logger.info(f"Events: {EVENTS}")
+logger.info(f"SNS: {SNS_ARN}")
 
 chosen_event = EVENTS[randint(0, len(EVENTS)-1)]
+logger.info(f"Chosen Event: {chosen_event}")
 event = {}
 fake = Faker()
 
@@ -55,9 +62,9 @@ def lambda_handler(event, context):
             TopicArn=SNS_ARN,
             Message=event_json,
             MessageAttributes={
-                'event': {
-                    'DataType': 'String',
-                    'StringValue': chosen_event
+                "event": {
+                    "DataType": "String",
+                    "StringValue": str(chosen_event)
                 }
             }
         )
@@ -71,7 +78,7 @@ def lambda_handler(event, context):
         else:
             data = newPayment()
         
-        print(data)
+        logger.info(data)
 
     generate_data()
 
