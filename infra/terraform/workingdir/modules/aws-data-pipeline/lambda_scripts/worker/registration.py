@@ -90,8 +90,8 @@ def lambda_handler(event, context):
             data_record_map['email'] = data['mail']
             data_record_map['job'] = data['job']
             data_record_map['ssn'] = ssn_anonimization(data['ssn'])
-            data_record_map['adress'] = data['adress']
-            data_record_map['birthdate'] = to_athena_date_format(data['birthdate'])
+            data_record_map['address'] = data['address']
+            data_record_map['birthdate'] = data['birthdate']
             data_record_map['gender'] = data['sex']
             data_record_map['blood_group'] = data['blood_group']
             data_record_map['websites'] = data['website']
