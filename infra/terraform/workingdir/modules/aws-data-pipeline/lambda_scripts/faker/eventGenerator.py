@@ -54,9 +54,9 @@ def send_sns(event_json):
         TopicArn=SNS_ARN,
         Message=event_json,
         MessageAttributes={
-            'string': {
-                'DataType': 'string',
-                'event': chosen_event
+            'event': {
+                'DataType': 'String',
+                'StringValue': chosen_event
             }
         }
     )
