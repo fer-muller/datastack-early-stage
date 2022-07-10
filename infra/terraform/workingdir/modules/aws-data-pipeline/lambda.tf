@@ -1,6 +1,6 @@
 locals {
   tmp_folder_path = "/tmp/"
-  event_generator = "eventGenerator"
+  event_generator_filename = "eventGenerator"
 
   # This layer is the version 2 for Python 3.8 runtime using sa-east-1
   # This ARN may change over time for new updates. Make sure to check if this is the last version
@@ -95,10 +95,10 @@ resource "aws_lambda_function" "event_generator" {
     aws_s3_bucket_object.event_generator_lambda_files
   ]
   s3_bucket     = module.s3_bucket_artifact.s3_bucket_id
-  s3_key        = "${local.event_generator}.zip"
-  function_name = local.event_generator
+  s3_key        = "${local.event_generator_filename}.zip"
+  function_name = "${var.deployment}-${local.event_generator_filename}-${var.lambda_suffix}"
   role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "${local.event_generator}.${var.lambda_handler_pattern_name}"
+  handler       = "${local.event_generator_filename}.${var.lambda_handler_pattern_name}"
   #source_code_hash               = filebase64sha256("${module.s3_bucket_artifact.s3_bucket_id}/${var.lambda_sns_deadqueue_filename}/artifact.zip")
   runtime                        = var.lambda_runtime
   timeout                        = var.lambda_default_timeout
