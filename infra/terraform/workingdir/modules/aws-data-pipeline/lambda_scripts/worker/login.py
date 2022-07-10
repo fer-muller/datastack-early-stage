@@ -79,7 +79,7 @@ def lambda_handler(event, context):
             data_record_map['dispositive'] = data['dispositive']
             data_record_map['country'] = data['country']
             data_record_map['city'] = data['city']
-            data_record_map['login_date'] = to_athena_date_format(data['date'], app_date_format)
+            data_record_map['login_date'] = data['date']
             data_record_map['extraction_date'] = athena_date
 
     def staging_injection(data_record_dict):
