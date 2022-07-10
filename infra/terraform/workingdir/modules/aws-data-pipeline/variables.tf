@@ -162,6 +162,6 @@ variable "lambda_event_generator_zip_scripts_path" {
 }
 
 variable "sns_arn" {
-  type = string
+  type        = string
   description = "SNS that will be used to receive random events from event generator"
 }
