@@ -30,7 +30,7 @@ provider "aws" {
 ################################################################################
 resource "random_string" "stack" {
   length  = 8
-  numeric  = true
+  numeric = true
   lower   = true
   upper   = false
   special = false
@@ -45,13 +45,13 @@ module "development" {
 
   #count = local.environment == "development" ? 1 : 0
 
-  region                                 = var.region
-  environment                            = local.environment
-  prefix                                 = local.prefix
-  stack_id                               = local.stack_id
-  tags                                   = local.tags
-  deployment                             = local.deployment
-  account_id                             = local.account_id
+  region      = var.region
+  environment = local.environment
+  prefix      = local.prefix
+  stack_id    = local.stack_id
+  tags        = local.tags
+  deployment  = local.deployment
+  account_id  = local.account_id
   # TO DO: Update events according to your project
   events                                 = ["login", "registration", "newPayment"]
   etl_batch_size                         = 50
