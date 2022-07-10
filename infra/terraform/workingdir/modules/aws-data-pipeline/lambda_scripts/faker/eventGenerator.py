@@ -61,6 +61,7 @@ def lambda_handler(event, context):
                 }
             }
         )
+        return response
 
     def generate_data():
         if chosen_event == 'login':
