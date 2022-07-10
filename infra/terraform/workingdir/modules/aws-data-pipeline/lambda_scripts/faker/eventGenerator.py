@@ -10,7 +10,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 SNS_ARN = os.environ['SNS_ARN']
-EVENTS = os.environ['EVENTS']
+EVENTS = list(os.environ['EVENTS'])
 logger.info(f"Events: {EVENTS}")
 logger.info(f"SNS: {SNS_ARN}")
 
