@@ -82,6 +82,8 @@ def lambda_handler(event, context):
             data_record_map['payment_date'] = data['date']
             data_record_map['extraction_date'] = athena_date
 
+            data_record_dict.append(data_record_map)
+
     def staging_injection(data_record_dict):
 
         df_records = pd.DataFrame(data_record_dict)

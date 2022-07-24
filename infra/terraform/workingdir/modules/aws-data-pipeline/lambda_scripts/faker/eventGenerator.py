@@ -34,7 +34,7 @@ def lambda_handler(event, context):
         dispositives = ['ios', 'android', 'windows', 'macos', 'linux']
         chosen_dispositive = randint(0, len(dispositives)-1)
         events['user'] = fake.name()
-        events['date'] = datetime.strftime(fake.date_between(start_date='-1d', end_date='today'), '%Y-%m-%d')
+        events['date'] = datetime.strftime(fake.date_between(start_date='-365d', end_date='today'), '%Y-%m-%d')
         events['dispositive'] = dispositives[chosen_dispositive]
         events['city'] = fake.city()
         events['country'] = fake.country()
@@ -58,7 +58,7 @@ def lambda_handler(event, context):
         chosen_billing_method = billing_method_list[randint(0, len(billing_method_list)-1)]
         events['user'] = fake.name()
         events['value'] = randint(99, 549)
-        events['date'] = datetime.strftime(fake.date_between(start_date='-1d', end_date='today'), '%Y-%m-%d')
+        events['date'] = datetime.strftime(fake.date_between(start_date='-365d', end_date='today'), '%Y-%m-%d')
         events['salesperson'] = fake.name()
         events['subscription'] = chosen_subscription
         events['billing_method'] = chosen_billing_method
